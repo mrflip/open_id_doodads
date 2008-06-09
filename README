@@ -1,0 +1,7 @@
+
+
+Allow users with open_id provided by major sites (livejournal, blogger,
+wordpress, myopenid, etc) to just type their username insted of their full
+open_id url.
+
+This is just a scaffold right now, check back later.
