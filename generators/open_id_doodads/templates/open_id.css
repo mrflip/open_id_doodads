@@ -1,0 +1,37 @@
+/* .valign-middle td,
+.valign-middle th     { vertical-align:middle }
+p img                 { margin: 0 }
+.big-fun-font, .big-fun-font input, .big-fun-font label, .big-fun-font select,
+.big-fun-font option  { }
+
+div.open_id-sel        { float:left; }
+div.open_id-sel p      { margin: 0px; }
+
+.big-login-box div    { float:left; }
+#login-box-label-box      { text-align:right; margin: 0px 6px 4px 0; width: 60px; }
+*/
+/* class="column span-2" */
+
+/* div#open_id_provider_box  {  */
+
+#open_id_intro_box {  margin: 5em 0 1em 0;  float:left; font-size:14px; }
+/* Put a big chunk of whitespace above and below */ 
+#open_id_login_box {  margin: 1em 0 4em 0; float:left; clear:both }
+/* Inside the login box */
+#open_id_login_box label, #open_id_login_box>img, #open_id_login_box>select,
+#open_id_login_box input, #open_id_login_box div {
+    float: left;
+    margin-left: 0.25em; margin-right: 0.25em;
+    font-size: 16px; font-family:"trebuchet ms","Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+}
+img#open_id_provider_icon 	{ margin: -4px 6px 0px 0px; }
+select#open_id_provider>option 	{ width:111px; height: 22px; padding-left:26px;
+     background-repeat:no-repeat; background-position:2px 50%; }    
+select#open_id_provider  	{ width:162px;  }
+input#openid_url         	{ width:286px; }
+div#open_id_helper_text 	{ width:386px; font-size:12px; overflow: hidden; }
+
+img.para_inset_left { margin: -0.25em 0.5em 0 0; float:left }
+
+div.open_id_provider_gallery     { float:right; clear: none; margin:-0.25em 0 0 0.5em; width:154px }
+div.open_id_provider_gallery img { margin: 0px 1px 3px 1px }
