@@ -1,0 +1,47 @@
+
+----------------------------------------------------------------------------------
+
+h2. About these icons
+
+The original OpenID logo got muddy at low resolutions, so I hacked up a tweaked
+version that better keeps the spirit of the original at tiny sizes.
+
+The tweaks:
+* darken the arrow so it didn't get washed out
+* align things with pixel boundaries so vertical and horizontal bondaries
+  remain sharp
+* make the shapes much larger (and clunkier) to retain visual weight.
+
+The vector files of the tweaked versions are noticably clunkier than the
+original.  If you use them at larger sizes people will point and laugh.
+
+I actually can't find anything about the license for the original.  Hopefully
+they're cool with it.
+
+I studied the .svg icon from halfgeek.org while preparing mine.
+
+----------------------------------------------------------------------------------
+
+h2. Which to use
+
+The files are all transparent .pngs, named
+  @@openid  -  PIXEL_SIZE  - BACKGROUND_MATTE .png@@
+
+* pixel size is obvious: how big the icon.
+* background matte is the background color the transparency mattes best on, to avoid annoying light-colored fringing around the icon.
+
+There are also two variants from the excellent free-license icon collection at 
+  http://gorvan.com
+
+----------------------------------------------------------------------------------
+
+h2. More info
+
+See more at:
+  http://infochimps.org/static/openid-icon/index.html
+
+Or git repo at:
+  http://github.com/mrflip/open_id_doodads
+
+Philip (flip) Kromer
+flip@infochimps.org

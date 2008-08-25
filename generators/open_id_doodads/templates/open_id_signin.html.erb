@@ -1,0 +1,126 @@
+<% content_for :head, %Q!
+<style type="text/css">
+  .valign-middle td,
+  .valign-middle th     { vertical-align:middle }
+  p img                 { margin: 0 }
+  .big-fun-font, .big-fun-font input, .big-fun-font label, .big-fun-font select,
+  .big-fun-font option  { font-size: 16px; font-family:"trebuchet ms","Lucida Grande",Helvetica,Arial,Verdana,sans-serif; }
+  .icon-menu,
+  .icon-menu option     { background-repeat:no-repeat; background-position:2px 50%;  }
+  .icon-menu option     { width:111px; padding-left:26px; height: 22px; }
+  .icon-menu            { width:162px;  }
+  div.open_id-sel        { float:left; }
+  div.open_id-sel img    { margin: -4px 6px 0px 0px; }
+  div.open_id-sel p      { margin: 0px; }
+  div.big-login-box     { margin: 5em 0 4em 0; float:left; clear:both }
+
+  .big-login-box div    { float:left; }
+  #login-box-label-box      { text-align:right; margin: 0px 6px 4px 0; width: 60px; }
+  #openid_url.openid_url_wide { width:286px; }
+  /* class="column span-2" */
+</style> ! -%>
+<% content_for :javascripts, %Q!
+  <script  type="text/javascript">
+    var open_id_providers = #{ @open_id_providers.to_json };
+
+    function open_idProviderURLText(open_id_provider, openid_url) {
+      provider_url_template = open_id_providers[open_id_provider]['desc']
+      if (openid_url) {
+        return provider_url_template.sub(/#\{[^\}]*\}/, openid_url);
+      } else {
+        return provider_url_template
+      }
+    }
+
+    open_id_provider_url_flash = false;
+    function open_idSetURLTextElement() {
+      open_id_provider = $('open_id_provider').getValue();
+      openid_url      = $('openid_url').value
+      $('open_id_provider_url').show();
+      $('open_id_provider_url').innerHTML = open_idProviderURLText(open_id_provider, openid_url);
+      if (open_id_provider_url_flash) {
+        new Effect.Highlight('open_id_provider_url',{startcolor:'#ffffd0', endcolor:'#ffffff', duration: 0.3});
+      } else {
+        open_id_provider_url_flash = true
+      }
+    }
+    function open_idSetProviderIcon() {
+      open_id_provider = $('open_id_provider').getValue();
+      $('open_id_provider_icon').src = "/images/siteicons/32/"+open_id_provider+"-32.png" 
+    }
+
+    function open_idProviderChanged() {
+      open_idSetProviderIcon();
+      open_idSetURLTextElement();
+    }
+    function open_idURLChanged()      { open_idSetURLTextElement() }
+
+    document.observe('dom:loaded', function() {
+      open_idProviderChanged();
+      $('open_id_provider').observe('change', open_idProviderChanged);
+      $('openid_url'     ).observe('change', open_idURLChanged);
+    });
+
+
+  </script>
+!
+  -%>
+
+<div style="margin-top:2em">
+  
+  <div class='big-login-box big-fun-font'>
+    <% form_tag session_path do -%>
+    
+    <div class="column span-6">
+      <div class="open_id-sel"><p>
+        <img id="open_id_provider_icon" src="/images/siteicons/32/open_id-32.png" alt="OpenID icon" title="OpenID: Some URL-lookin' thing" width="32" height="32" />
+        <%= select_tag(:open_id_provider, open_id_providers_in_order.map do |siteid, site|
+            %{<option value="#{siteid}" style="background-image: url(/images/siteicons/16/#{siteid}-16.png);" #{site[:selected]}>#{site[:name]}</option>}
+            end, :class=>'icon-menu') %>
+      </p></div>
+    </div>    
+    <div id="login-box-label-box"><label for="openid_url" id="login-box-label">Name:</label></div>
+    <div class="column span-9">
+      <%= text_field_tag 'openid_url', @identity_url, :class=>['openid_url_wide'] %>
+      <span id="open_id_provider_url" class="quiet" style="font-size:12px; display:none"><%=h @open_id_providers['open_id'][:desc] %></span>
+    </div>
+    <div class="column span-4 last">
+      <div style="height:32px"><%= submit_tag 'Sign in', :style => 'width:132px' %></div><br />
+      <%= check_box_tag('remember_me', true) %> <label for="remember_me" class="quiet" style="font-size:12px">(Remember me)</label>
+    </div>
+    <% end -%>
+  </div>
+  
+  <div style="float:left">
+    <p>To use infochimps.org as a registered user, you don't have to validate
+    your email and you don't have to make up a password.  (Why would you tell a
+    chimpanzee your password?).  All we need is to make sure that you (and only
+    you) receive credit for your contributions.</p>
+
+    <img src="/images/siteicons/32/open_id-32.png" alt="OpenID icon" title="OpenID: free and easy way to simplify and control your identity on the web" style="margin: -0.25em 0.5em 0 0; float:left" />
+    <p>The best way to do this is <a href="http://open_id.net/what/">with an OpenID</a>.
+
+    Yeah, signing up for some new stupid password thing is annoying.  But we
+    promise: it's fast and easy to get one, and they're quickly becoming
+    ubiquitous. <a href="https://www.myopenid.com/">MyOpenID</a> and
+    <a href="http://claimid.com/">ClaimID</a> are two well-known (and free!)
+    providers. If you're adventurous it's actually fairly easy to <a
+    href="http://www.intertwingly.net/blog/2007/01/03/OpenID-for-non-SuperUsers">set
+    up your own OpenID</a>.</p>
+
+    <div style="float:right; clear: none; margin:-0.25em 0 0 0.5em; width:154px">
+      <%- open_id_providers_in_order[1..-1].each do |siteid, site| -%>
+      <img src="/images/siteicons/32/<%=h siteid %>-32.png" alt="<%=h site[:name] %> icon" title="<%=h site[:name] %>: <%=h site[:desc] %>" style="margin: 0px 1px 3px 1px" />
+      <%- end -%>
+    </div>
+    <p>
+      The other way is to have any of these sites vouch for you.
+      
+      You won't be typing in your password here: we'll bounce you to their login
+      screen, you log in with them, they bounce you right back.  If you approve
+      sharing your name, email or nickname we'll auto-fill them, but we won't have
+    <em>any</em> access to your account.</p>
+    <br/>
+    &nbsp;
+  </div>  
+</div>
