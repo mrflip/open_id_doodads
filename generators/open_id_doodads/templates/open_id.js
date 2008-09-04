@@ -1,4 +1,14 @@
 
+function sit_and_spin() {
+  $('.submit-login').css('background', "#ccc url('/images/u/spinner-sun-28.gif') no-repeat right");
+  return true;
+}
+
+$(function() {
+  $('form.signin-form').bind('submit', sit_and_spin);
+});
+
+
 $(function() {
   // Elements to munge
   function open_id_prov() { return $('#open_id_provider') }
@@ -48,7 +58,7 @@ $(function() {
   open_id_prov().change(open_idProviderChanged);
   open_id_url( ).change(open_idURLChanged);
   open_id_gallery_icons().click(open_idGalleryClicked);
-  $("#open_id_wtf_shower").click(function(event){ $("#open_id_wtf").toggle("highlight", {color:'#ffffd0', duration: 0.3}, "normal"); });
+  $(".open_id_wtf_shower").click(function(event){ $("#open_id_wtf").toggle("highlight", {color:'#ffffd0', duration: 0.3}, "normal"); });
 })
 
 
